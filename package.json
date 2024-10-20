@@ -1,0 +1,19 @@
+{
+  "name": "sveltekit-artisan",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "compile": "bun build ./index.ts --compile --minify --sourcemap --outfile ./build/sv-artisan"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.7.7"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0"
+  }
+}
