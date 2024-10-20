@@ -1,9 +1,15 @@
 {
   "name": "sveltekit-artisan",
+  "version": "0.0.1",
+  "description": "A CLI tool for SvelteKit, akin to Laravel's Artisan",
   "module": "index.ts",
   "type": "module",
   "scripts": {
     "compile": "bun build ./index.ts --compile --minify --sourcemap --outfile ./build/sv-artisan"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maxiviper117/sveltekit-artisan-cli.git"
   },
   "devDependencies": {
     "@types/bun": "latest",
