@@ -229,8 +229,8 @@ sv-atrisan create:page [name] [options]
 
 **Options:**
 
-- `-c, --script`: Create the main script file (`+page.ts` or `+page.js`).
-- `-s, --server`: Create the server script file (`+page.server.ts` or `+page.server.js`).
+- `-s, --script`: Create the main script file (`+page.ts` or `+page.js`).
+- `-ss, --server`: Create the server script file (`+page.server.ts` or `+page.server.js`).
 
 **Behavior:**
 
@@ -282,7 +282,7 @@ sv-atrisan create:page [name] [options]
 **Sample Output:**
 
 ```bash
-➜ sv-atrisan create:page products -c -s
+➜ sv-atrisan create:page products -s -ss
 Page "products" created at /path/to/project/src/routes/products/+page.svelte
 Script file created at /path/to/project/src/routes/products/+page.ts
 Server script file created at /path/to/project/src/routes/products/+page.server.ts
@@ -291,7 +291,7 @@ Server script file created at /path/to/project/src/routes/products/+page.server.
 If files already exist:
 
 ```bash
-➜ sv-atrisan create:page products -c -s
+➜ sv-atrisan create:page products -s -ss
 Page "products" already exists at /path/to/project/src/routes/products/+page.svelte. Skipping.
 Script file already exists at /path/to/project/src/routes/products/+page.ts. Skipping.
 Server script file already exists at /path/to/project/src/routes/products/+page.server.ts. Skipping.
@@ -316,8 +316,8 @@ sv-atrisan create:layout [name] [options]
 
 **Options:**
 
-- `-c, --script`: Create the main script file (`+layout.ts` or `+layout.js`).
-- `-s, --server`: Create the server script file (`+layout.server.ts` or `+layout.server.js`).
+- `-s, --script`: Create the main script file (`+layout.ts` or `+layout.js`).
+- `-ss, --server`: Create the server script file (`+layout.server.ts` or `+layout.server.js`).
 
 **Behavior:**
 
@@ -369,7 +369,7 @@ sv-atrisan create:layout [name] [options]
 **Sample Output:**
 
 ```bash
-➜ sv-atrisan create:layout admin -c -s
+➜ sv-atrisan create:layout admin -s -ss
 Layout "admin" created at /path/to/project/src/routes/admin/+layout.svelte
 Script file created at /path/to/project/src/routes/admin/+layout.ts
 Server script file created at /path/to/project/src/routes/admin/+layout.server.ts
@@ -378,7 +378,7 @@ Server script file created at /path/to/project/src/routes/admin/+layout.server.t
 If files already exist:
 
 ```bash
-➜ sv-atrisan create:layout admin -c -s
+➜ sv-atrisan create:layout admin -s -ss
 Layout "admin" already exists at /path/to/project/src/routes/admin/+layout.svelte. Skipping.
 Script file already exists at /path/to/project/src/routes/admin/+layout.ts. Skipping.
 Server script file already exists at /path/to/project/src/routes/admin/+layout.server.ts. Skipping.
@@ -423,7 +423,7 @@ Commands:
 1. **Create a Page with Script Files**
 
    ```bash
-   sv-atrisan create:page products -c
+   sv-atrisan create:page products -s
    ```
 
    **Output:**
@@ -436,7 +436,7 @@ Commands:
 2. **Create the Server Script File for the Same Page**
 
    ```bash
-   sv-atrisan create:page products -s
+   sv-atrisan create:page products -ss
    ```
 
    **Output:**
@@ -449,7 +449,7 @@ Commands:
 3. **Attempting to Create an Existing Server Script**
 
    ```bash
-   sv-atrisan create:page products -s
+   sv-atrisan create:page products -ss
    ```
 
    **Output:**
@@ -467,7 +467,7 @@ Commands:
 1. **Create a Layout with Script Files**
 
    ```bash
-   sv-atrisan create:layout admin -c -s
+   sv-atrisan create:layout admin -s -ss
    ```
 
    **Output:**
@@ -481,7 +481,7 @@ Commands:
 2. **Attempt to Recreate an Existing Layout**
 
    ```bash
-   sv-atrisan create:layout admin -c -s
+   sv-atrisan create:layout admin -s -ss
    ```
 
    **Output:**
@@ -550,8 +550,8 @@ Server script file created at /path/to/project/src/routes/dashboard/analytics/+p
   - `create:layout` creates `+layout.svelte`.
 
 - **Custom Script and Server Script Flags**:
-  - `--script` (`-c`): Creates the main script file (`+page.ts/js` or `+layout.ts/js`).
-  - `--server` (`-s`): Creates the server script file (`+page.server.ts/js` or `+layout.server.ts/js`).
+  - `--script` (`-s`): Creates the main script file (`+page.ts/js` or `+layout.ts/js`).
+  - `--server` (`-ss`): Creates the server script file (`+page.server.ts/js` or `+layout.server.ts/js`).
   - These flags can be used independently or together to create only the desired files.
 
 - **Windows Path Handling**: The CLI tool is compatible with Windows. Ensure that you use the appropriate path separators (`/` or `.`) when specifying nested names.
