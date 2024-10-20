@@ -57,9 +57,9 @@ async function createFileIfNotExists(filePath, content, description) {
 
 // Command to create a Svelte component using Bun's Shell
 program
-  .command("create:component <name>")
+  .command("make:component <name>")
   .description(
-    "Create a new Svelte component, using `/` or `.` notation for nested folders"
+    "Make a new Svelte component, using `/` or `.` notation for nested folders"
   )
   .action(async (name) => {
     const formattedName = name.replace(/\./g, "/");
@@ -87,14 +87,42 @@ program
     await createFileIfNotExists(componentPath, content, `Component "${name}"`);
   });
 
+function formatCommand(command: string, maxLength: number): string {
+  const [cmd, args] = command.split(" ");
+  return `${cmd.padEnd(maxLength, " ")} ${args}`;
+}
+
+program
+  .command("make")
+  .alias("make:")
+  .description("All possible make commands")
+  .action(() => {
+    const commands = [
+      "make:component <name>",
+      "make:page [name]",
+      "make:layout [name]",
+    ];
+    const maxLength = Math.max(
+      ...commands.map((cmd) => cmd.split(" ")[0].length)
+    );
+
+    console.log("");
+    console.log(chalk.whiteBright.bold("Possible make commands:"));
+    console.log("");
+    commands.forEach((cmd) => {
+      console.log(chalk.green(`  ${formatCommand(cmd, maxLength)}`));
+    });
+    console.log("");
+  });
+
 // Command to create a new SvelteKit page using Bun's Shell
 program
-  .command("create:page [name]")
+  .command("make:page [name]")
   .description(
-    "Create a new SvelteKit page, using `/` or `.` notation for nested folders, or directly in `src/routes` if no name is provided"
+    "Make a new SvelteKit page, using `/` or `.` notation for nested folders, or directly in `src/routes` if no name is provided"
   )
-  .option("-c, --script", "Create a +page.ts/js file")
-  .option("-s, --server", "Create a +page.server.ts/js file")
+  .option("-s, --script", "Create a +page.ts/js file")
+  .option("-ss, --server", "Create a +page.server.ts/js file")
   .action(async (name = "", options) => {
     const formattedName = name ? name.replace(/\./g, "/") : "";
     const pageDir = path.join(process.cwd(), "src", "routes", formattedName);
@@ -162,9 +190,9 @@ export async function load() {
 
 // Command to create a new SvelteKit layout using Bun's Shell
 program
-  .command("create:layout [name]")
+  .command("make:layout [name]")
   .description(
-    "Create a new SvelteKit layout, using `/` or `.` notation for nested folders, or directly in `src/routes` if no name is provided"
+    "Make a new SvelteKit layout, using `/` or `.` notation for nested folders, or directly in `src/routes` if no name is provided"
   )
   .option("-c, --script", "Create a +layout.ts/js file")
   .option("-s, --server", "Create a +layout.server.ts/js file")
