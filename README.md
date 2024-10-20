@@ -83,18 +83,29 @@ This command will generate an executable named `sv-atrisan` in the `./build` dir
 > }
 > ```
 
-##### b. Move the Executable to a Directory in Your PATH
+##### b. Move the Executable to a Directory in Your PATH or Create a New Directory
 
-To make the `sv-atrisan` command accessible from anywhere in your terminal, move it to a directory that's included in your system's `PATH`. Common directories include `/usr/local/bin` on macOS/Linux or a custom directory on Windows.
+To make the `sv-atrisan` command accessible from anywhere in your terminal, you can either move it to a directory that's already included in your system's `PATH` or create a new directory and add it to the `PATH`.
 
 > [!TIP]
 > **Tip:** Choose a directory that's already in your `PATH` to avoid modifying environment variables.
 
 - **For macOS/Linux:**
 
-  ```bash
-  mv ./build/sv-atrisan /usr/local/bin/
-  ```
+  1. **Move to an Existing Directory in PATH:**
+
+     ```bash
+     mv ./build/sv-atrisan /usr/local/bin/
+     ```
+
+  2. **Or Create a New Directory and Add to PATH:**
+
+     ```bash
+     mkdir -p $HOME/bin
+     mv ./build/sv-atrisan $HOME/bin/
+     echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
+     source $HOME/.bashrc
+     ```
 
 - **For Windows:**
 
@@ -102,11 +113,21 @@ To make the `sv-atrisan` command accessible from anywhere in your terminal, move
 
      The compiled executable `sv-atrisan.exe` will be located in the `./build` directory.
 
-  2. **Move the Executable:**
+  2. **Move to an Existing Directory in PATH:**
 
-     Move `sv-atrisan.exe` to a directory like `C:\Program Files\sv-atrisan\`.
+     Move `sv-atrisan.exe` to a directory like `C:\Windows\System32\`.
 
-  3. **Add the Directory to PATH:**
+  3. **Or Create a New Directory and Add to PATH:**
+
+     - Create a new directory, for example, `C:\Program Files\sv-atrisan\`.
+     - Move `sv-atrisan.exe` to the new directory.
+
+     ```powershell
+     New-Item -ItemType Directory -Path "C:\Program Files\sv-atrisan"
+     Move-Item -Path ".\build\sv-atrisan.exe" -Destination "C:\Program Files\sv-atrisan\"
+     ```
+
+  4. **Add the Directory to PATH:**
 
      > [!IMPORTANT]
      > **Important:** Adding directories to your system's `PATH` allows you to run executables from any location in the terminal.
