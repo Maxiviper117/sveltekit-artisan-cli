@@ -74,9 +74,21 @@ bun run compile
 
 This command will generate an executable named `sv-atrisan` in the `./build` directory.
 
+> [!IMPORTANT]
+> **Important:** Ensure that the `compile` script is correctly defined in your `package.json`. If not, add the following script:
+>
+> ```json
+> "scripts": {
+>   "compile": "bun build index.ts --outdir=./build --target=system"
+> }
+> ```
+
 ##### b. Move the Executable to a Directory in Your PATH
 
 To make the `sv-atrisan` command accessible from anywhere in your terminal, move it to a directory that's included in your system's `PATH`. Common directories include `/usr/local/bin` on macOS/Linux or a custom directory on Windows.
+
+> [!TIP]
+> **Tip:** Choose a directory that's already in your `PATH` to avoid modifying environment variables.
 
 - **For macOS/Linux:**
 
@@ -96,6 +108,9 @@ To make the `sv-atrisan` command accessible from anywhere in your terminal, move
 
   3. **Add the Directory to PATH:**
 
+     > [!IMPORTANT]
+     > **Important:** Adding directories to your system's `PATH` allows you to run executables from any location in the terminal.
+
      - Press `Win + X` and select **System**.
      - Click on **Advanced system settings**.
      - Click on **Environment Variables**.
@@ -105,7 +120,7 @@ To make the `sv-atrisan` command accessible from anywhere in your terminal, move
 
 ##### c. Verify the Installation
 
-After moving the executable or updating your PATH, verify that the CLI tool is accessible by running:
+After moving the executable or updating your `PATH`, verify that the CLI tool is accessible by running:
 
 ```bash
 sv-atrisan --help
@@ -126,7 +141,8 @@ Commands:
   help                     Display help information
 ```
 
-If you see the help information, the installation was successful.
+> [!WARNING]
+> **Warning:** If you encounter a "command not found" error after moving the executable, ensure that the directory is correctly added to your `PATH` and that you've restarted your terminal session.
 
 ## Usage
 
@@ -260,6 +276,9 @@ Script file already exists at /path/to/project/src/routes/products/+page.ts. Ski
 Server script file already exists at /path/to/project/src/routes/products/+page.server.ts. Skipping.
 ```
 
+> [!CAUTION]
+> **Caution:** The CLI tool **does not** overwrite existing files. If a file already exists, it will be skipped to prevent accidental data loss.
+
 ### Creating a SvelteKit Layout
 
 Generate a new SvelteKit layout with optional script files. The command can create `+layout.svelte`, `+layout.ts/js`, and `+layout.server.ts/js` based on flags and project configuration.
@@ -344,6 +363,9 @@ Script file already exists at /path/to/project/src/routes/admin/+layout.ts. Skip
 Server script file already exists at /path/to/project/src/routes/admin/+layout.server.ts. Skipping.
 ```
 
+> [!IMPORTANT]
+> **Important:** Always ensure that the directory structure (`src/routes/`) aligns with your SvelteKit project setup to avoid unexpected behavior.
+
 ### Help Command
 
 The CLI provides help information for users to understand available commands and options.
@@ -416,6 +438,9 @@ Commands:
    Server script file already exists at /path/to/project/src/routes/products/+page.server.ts. Skipping.
    ```
 
+> [!TIP]
+> **Tip:** Running the same command multiple times won't overwrite existing files, ensuring your previous work remains safe.
+
 ### Creating a Layout
 
 1. **Create a Layout with Script Files**
@@ -446,6 +471,9 @@ Commands:
    Server script file already exists at /path/to/project/src/routes/admin/+layout.server.ts. Skipping.
    ```
 
+> [!WARNING]
+> **Warning:** Attempting to overwrite existing files without proper flags can lead to data loss. Always check the output messages to ensure your files are safe.
+
 ### Creating a Nested Component
 
 ```bash
@@ -457,6 +485,9 @@ sv-atrisan create:component ui/buttons/PrimaryButton
 ```
 Component "ui/buttons/PrimaryButton" created at /path/to/project/src/lib/components/ui/buttons/PrimaryButton.svelte
 ```
+
+> [!IMPORTANT]
+> **Important:** Use `/` or `.` to create nested directories, enhancing your project's organization and maintainability.
 
 ### Creating a Nested Page with Scripts
 
@@ -475,6 +506,9 @@ Server script file created at /path/to/project/src/routes/dashboard/analytics/+p
 ## Notes
 
 - **File Overwriting**: The CLI tool does **not** overwrite existing files. If a file already exists, it will be skipped, and a warning message will inform you. This ensures that your existing work remains intact.
+
+  > [!CAUTION]
+  > **Caution:** While the tool prevents overwriting, always ensure that critical files are backed up or version-controlled to avoid accidental data loss.
 
 - **Terminal Coloring**: Success messages are displayed in green, warnings in yellow, and error messages in red for enhanced readability and user experience.
 
@@ -500,6 +534,9 @@ Server script file created at /path/to/project/src/routes/dashboard/analytics/+p
   - These flags can be used independently or together to create only the desired files.
 
 - **Windows Path Handling**: The CLI tool is compatible with Windows. Ensure that you use the appropriate path separators (`/` or `.`) when specifying nested names.
+
+> [!TIP]
+> **Tip:** Always verify the output paths to ensure that files are being created in the intended directories, especially when working with nested structures.
 
 ## Contributing
 
