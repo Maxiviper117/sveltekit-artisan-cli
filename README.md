@@ -5,6 +5,11 @@
 - [Introduction](#introduction)
 - [Features](#features)
 - [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Steps](#steps)
+    - [1. Clone the Repository](#1-clone-the-repository)
+    - [2. Install Dependencies](#2-install-dependencies)
+    - [3. Compile the Script to an Executable](#3-compile-the-script-to-an-executable)
 - [Usage](#usage)
   - [Creating a Svelte Component](#creating-a-svelte-component)
   - [Creating a SvelteKit Page](#creating-a-sveltekit-page)
@@ -36,40 +41,92 @@ The **SvelteKit Artisan CLI Tool** is a powerful command-line interface designed
 
 ### Steps
 
-1. **Clone the Repository**
+#### 1. Clone the Repository
 
-   ```bash
-   git clone https://github.com/yourusername/sveltekit-cli.git
-   cd sveltekit-cli
-   ```
+Clone the CLI tool repository to your local machine:
 
-2. **Install Dependencies**
+```bash
+git clone https://github.com/yourusername/sveltekit-cli.git
+cd sveltekit-cli
+```
 
-   The CLI tool uses [Commander](https://github.com/tj/commander.js) for command parsing and [Chalk](https://github.com/chalk/chalk) for terminal coloring.
+#### 2. Install Dependencies
 
-   Install dependencies using Bun:
+The CLI tool uses [Commander](https://github.com/tj/commander.js) for command parsing and [Chalk](https://github.com/chalk/chalk) for terminal coloring.
 
-   ```bash
-   bun install
-   ```
+Install dependencies using Bun:
 
-3. **Make the Script Executable**
+```bash
+bun install
+```
 
-   Ensure that the CLI script is executable:
+#### 3. Compile the Script to an Executable
 
-   ```bash
-   chmod +x index.ts
-   ```
+To use the CLI tool as a system-wide executable, you need to compile it into a native executable using Bun's compiler. Follow these steps:
 
-4. **(Optional) Link the CLI Globally**
+##### a. Run the Compile Command
 
-   To use the CLI tool globally across your system, you can link it:
+The project includes a `compile` script in `package.json` that uses Bun to compile the CLI tool into an executable.
 
-   ```bash
-   bun link
-   ```
+```bash
+bun run compile
+```
 
-   After linking, you can use the CLI commands from anywhere in your terminal.
+This command will generate an executable named `sv-atrisan` in the `./build` directory.
+
+##### b. Move the Executable to a Directory in Your PATH
+
+To make the `sv-atrisan` command accessible from anywhere in your terminal, move it to a directory that's included in your system's `PATH`. Common directories include `/usr/local/bin` on macOS/Linux or a custom directory on Windows.
+
+- **For macOS/Linux:**
+
+  ```bash
+  mv ./build/sv-atrisan /usr/local/bin/
+  ```
+
+- **For Windows:**
+
+  1. **Locate the Executable:**
+
+     The compiled executable `sv-atrisan.exe` will be located in the `./build` directory.
+
+  2. **Move the Executable:**
+
+     Move `sv-atrisan.exe` to a directory like `C:\Program Files\sv-atrisan\`.
+
+  3. **Add the Directory to PATH:**
+
+     - Press `Win + X` and select **System**.
+     - Click on **Advanced system settings**.
+     - Click on **Environment Variables**.
+     - Under **System variables**, find and select `Path`, then click **Edit**.
+     - Click **New** and add the path to the directory containing `sv-atrisan.exe` (e.g., `C:\Program Files\sv-atrisan\`).
+     - Click **OK** to save changes.
+
+##### c. Verify the Installation
+
+After moving the executable or updating your PATH, verify that the CLI tool is accessible by running:
+
+```bash
+sv-atrisan --help
+```
+
+**Expected Output:**
+
+```
+Usage: sv-atrisan [options] [command]
+
+Options:
+  -h, --help         display help for command
+
+Commands:
+  create:component <name>  Create a new Svelte component, using `/` or `.` notation for nested folders
+  create:page [name]       Create a new SvelteKit page, using `/` or `.` notation for nested folders, or directly in `src/routes` if no name is provided
+  create:layout [name]     Create a new SvelteKit layout, using `/` or `.` notation for nested folders, or directly in `src/routes` if no name is provided
+  help                     Display help information
+```
+
+If you see the help information, the installation was successful.
 
 ## Usage
 
@@ -78,8 +135,10 @@ You can use the CLI tool to create components, pages, and layouts in your Svelte
 ### General Syntax
 
 ```bash
-bun index.ts <command> [name] [options]
+sv-atrisan <command> [name] [options]
 ```
+
+*Note: If you haven't moved the executable to your PATH, you can run the CLI tool using `bun index.ts <command> [name] [options]`.*
 
 ### Creating a Svelte Component
 
@@ -88,7 +147,7 @@ Generate a new Svelte component. Supports nested directories using `/` or `.`.
 **Syntax:**
 
 ```bash
-bun index.ts create:component <name>
+sv-atrisan create:component <name>
 ```
 
 **Parameters:**
@@ -98,7 +157,7 @@ bun index.ts create:component <name>
 **Example:**
 
 ```bash
-bun index.ts create:component Button
+sv-atrisan create:component Button
 ```
 
 This creates `src/lib/components/Button.svelte`.
@@ -106,7 +165,7 @@ This creates `src/lib/components/Button.svelte`.
 For nested components:
 
 ```bash
-bun index.ts create:component ui/Button
+sv-atrisan create:component ui/Button
 ```
 
 Creates `src/lib/components/ui/Button.svelte`.
@@ -124,7 +183,7 @@ Generate a new SvelteKit page with optional script files. The command can create
 **Syntax:**
 
 ```bash
-bun index.ts create:page [name] [options]
+sv-atrisan create:page [name] [options]
 ```
 
 **Parameters:**
@@ -146,7 +205,7 @@ bun index.ts create:page [name] [options]
 1. **Create a Page Without Any Script Files**
 
    ```bash
-   bun index.ts create:page
+   sv-atrisan create:page
    ```
 
    **Result:**
@@ -155,7 +214,7 @@ bun index.ts create:page [name] [options]
 2. **Create a Page with Main Script File Only**
 
    ```bash
-   bun index.ts create:page about --script
+   sv-atrisan create:page about --script
    ```
 
    **Result:**
@@ -165,7 +224,7 @@ bun index.ts create:page [name] [options]
 3. **Create a Page with Server Script File Only**
 
    ```bash
-   bun index.ts create:page contact --server
+   sv-atrisan create:page contact --server
    ```
 
    **Result:**
@@ -175,7 +234,7 @@ bun index.ts create:page [name] [options]
 4. **Create a Page with Both Main and Server Script Files**
 
    ```bash
-   bun index.ts create:page products --script --server
+   sv-atrisan create:page products --script --server
    ```
 
    **Result:**
@@ -186,19 +245,19 @@ bun index.ts create:page [name] [options]
 **Sample Output:**
 
 ```bash
-➜ bun index.ts create:page products -c -s
-Page "products" created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.svelte
-Script file created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.ts
-Server script file created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.server.ts
+➜ sv-atrisan create:page products -c -s
+Page "products" created at /path/to/project/src/routes/products/+page.svelte
+Script file created at /path/to/project/src/routes/products/+page.ts
+Server script file created at /path/to/project/src/routes/products/+page.server.ts
 ```
 
 If files already exist:
 
 ```bash
-➜ bun index.ts create:page products -c -s
-Page "products" already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.svelte. Skipping.
-Script file already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.ts. Skipping.
-Server script file already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.server.ts. Skipping.
+➜ sv-atrisan create:page products -c -s
+Page "products" already exists at /path/to/project/src/routes/products/+page.svelte. Skipping.
+Script file already exists at /path/to/project/src/routes/products/+page.ts. Skipping.
+Server script file already exists at /path/to/project/src/routes/products/+page.server.ts. Skipping.
 ```
 
 ### Creating a SvelteKit Layout
@@ -208,7 +267,7 @@ Generate a new SvelteKit layout with optional script files. The command can crea
 **Syntax:**
 
 ```bash
-bun index.ts create:layout [name] [options]
+sv-atrisan create:layout [name] [options]
 ```
 
 **Parameters:**
@@ -230,7 +289,7 @@ bun index.ts create:layout [name] [options]
 1. **Create a Layout Without Any Script Files**
 
    ```bash
-   bun index.ts create:layout
+   sv-atrisan create:layout
    ```
 
    **Result:**
@@ -239,7 +298,7 @@ bun index.ts create:layout [name] [options]
 2. **Create a Layout with Main Script File Only**
 
    ```bash
-   bun index.ts create:layout admin --script
+   sv-atrisan create:layout admin --script
    ```
 
    **Result:**
@@ -249,7 +308,7 @@ bun index.ts create:layout [name] [options]
 3. **Create a Layout with Server Script File Only**
 
    ```bash
-   bun index.ts create:layout admin --server
+   sv-atrisan create:layout admin --server
    ```
 
    **Result:**
@@ -259,7 +318,7 @@ bun index.ts create:layout [name] [options]
 4. **Create a Layout with Both Main and Server Script Files**
 
    ```bash
-   bun index.ts create:layout dashboard --script --server
+   sv-atrisan create:layout dashboard --script --server
    ```
 
    **Result:**
@@ -270,19 +329,19 @@ bun index.ts create:layout [name] [options]
 **Sample Output:**
 
 ```bash
-➜ bun index.ts create:layout admin -c -s
-Layout "admin" created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.svelte
-Script file created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.ts
-Server script file created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.server.ts
+➜ sv-atrisan create:layout admin -c -s
+Layout "admin" created at /path/to/project/src/routes/admin/+layout.svelte
+Script file created at /path/to/project/src/routes/admin/+layout.ts
+Server script file created at /path/to/project/src/routes/admin/+layout.server.ts
 ```
 
 If files already exist:
 
 ```bash
-➜ bun index.ts create:layout admin -c -s
-Layout "admin" already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.svelte. Skipping.
-Script file already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.ts. Skipping.
-Server script file already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.server.ts. Skipping.
+➜ sv-atrisan create:layout admin -c -s
+Layout "admin" already exists at /path/to/project/src/routes/admin/+layout.svelte. Skipping.
+Script file already exists at /path/to/project/src/routes/admin/+layout.ts. Skipping.
+Server script file already exists at /path/to/project/src/routes/admin/+layout.server.ts. Skipping.
 ```
 
 ### Help Command
@@ -292,7 +351,7 @@ The CLI provides help information for users to understand available commands and
 **Syntax:**
 
 ```bash
-bun index.ts help
+sv-atrisan help
 ```
 
 **Description:**
@@ -302,7 +361,7 @@ Displays help information about available commands and options.
 **Example Output:**
 
 ```bash
-Usage: bun index.ts [options] [command]
+Usage: sv-atrisan [options] [command]
 
 Options:
   -h, --help         display help for command
@@ -321,40 +380,40 @@ Commands:
 1. **Create a Page with Script Files**
 
    ```bash
-   bun index.ts create:page products -c
+   sv-atrisan create:page products -c
    ```
 
    **Output:**
 
    ```
-   Page "products" created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.svelte
-   Script file created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.ts
+   Page "products" created at /path/to/project/src/routes/products/+page.svelte
+   Script file created at /path/to/project/src/routes/products/+page.ts
    ```
 
 2. **Create the Server Script File for the Same Page**
 
    ```bash
-   bun index.ts create:page products -s
+   sv-atrisan create:page products -s
    ```
 
    **Output:**
 
    ```
-   Page "products" already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.svelte. Skipping.
-   Server script file created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.server.ts
+   Page "products" already exists at /path/to/project/src/routes/products/+page.svelte. Skipping.
+   Server script file created at /path/to/project/src/routes/products/+page.server.ts
    ```
 
 3. **Attempting to Create an Existing Server Script**
 
    ```bash
-   bun index.ts create:page products -s
+   sv-atrisan create:page products -s
    ```
 
    **Output:**
 
    ```
-   Page "products" already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.svelte. Skipping.
-   Server script file already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\products\+page.server.ts. Skipping.
+   Page "products" already exists at /path/to/project/src/routes/products/+page.svelte. Skipping.
+   Server script file already exists at /path/to/project/src/routes/products/+page.server.ts. Skipping.
    ```
 
 ### Creating a Layout
@@ -362,35 +421,35 @@ Commands:
 1. **Create a Layout with Script Files**
 
    ```bash
-   bun index.ts create:layout admin -c -s
+   sv-atrisan create:layout admin -c -s
    ```
 
    **Output:**
 
    ```
-   Layout "admin" created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.svelte
-   Script file created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.ts
-   Server script file created at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.server.ts
+   Layout "admin" created at /path/to/project/src/routes/admin/+layout.svelte
+   Script file created at /path/to/project/src/routes/admin/+layout.ts
+   Server script file created at /path/to/project/src/routes/admin/+layout.server.ts
    ```
 
 2. **Attempt to Recreate an Existing Layout**
 
    ```bash
-   bun index.ts create:layout admin -c -s
+   sv-atrisan create:layout admin -c -s
    ```
 
    **Output:**
 
    ```
-   Layout "admin" already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.svelte. Skipping.
-   Script file already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.ts. Skipping.
-   Server script file already exists at D:\David\Development\Experiments\bun\sveltekit-cli\src\routes\admin\+layout.server.ts. Skipping.
+   Layout "admin" already exists at /path/to/project/src/routes/admin/+layout.svelte. Skipping.
+   Script file already exists at /path/to/project/src/routes/admin/+layout.ts. Skipping.
+   Server script file already exists at /path/to/project/src/routes/admin/+layout.server.ts. Skipping.
    ```
 
 ### Creating a Nested Component
 
 ```bash
-bun index.ts create:component ui/buttons/PrimaryButton
+sv-atrisan create:component ui/buttons/PrimaryButton
 ```
 
 **Output:**
@@ -402,7 +461,7 @@ Component "ui/buttons/PrimaryButton" created at /path/to/project/src/lib/compone
 ### Creating a Nested Page with Scripts
 
 ```bash
-bun index.ts create:page dashboard/analytics --script --server
+sv-atrisan create:page dashboard/analytics --script --server
 ```
 
 **Output:**
@@ -424,7 +483,7 @@ Server script file created at /path/to/project/src/routes/dashboard/analytics/+p
   **Example:**
 
   ```bash
-  bun index.ts create:component ui/buttons/PrimaryButton
+  sv-atrisan create:component ui/buttons/PrimaryButton
   ```
 
   This creates `src/lib/components/ui/buttons/PrimaryButton.svelte`.
