@@ -79,7 +79,7 @@ This command will generate an executable named `sv-atrisan` in the `./build` dir
 >
 > ```json
 > "scripts": {
->   "compile": "bun build index.ts --outdir=./build --target=system"
+>   "compile": "bun build ./index.ts --compile --minify --sourcemap --outfile ./build/sv-artisan"
 > }
 > ```
 
